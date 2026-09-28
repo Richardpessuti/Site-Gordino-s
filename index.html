@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gordino's · Lanches</title>
-<meta name="description" content="Gordino's — cardápio, horários, endereço e pedidos.">
+<title>Gordino's</title>
+<meta name="description" content="Gordino's — horários, endereço e pedidos.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
@@ -50,36 +50,10 @@
   .pane.active{display:block;}
   @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 
-  /* DESTAQUE */
-  .highlight{position:relative;background:var(--accent);color:var(--ink);border-radius:26px;padding:28px 24px;margin-bottom:18px;overflow:hidden;}
-  .seal{position:absolute;top:18px;right:18px;width:72px;height:72px;border-radius:50%;background:var(--accent-2);color:#fff;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(9deg);line-height:1;}
-  .seal small{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;}
-  .seal b{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:1.1rem;margin-top:2px;}
-  .eyebrow{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:800;}
-  .highlight h2{font-weight:800;font-size:1.9rem;letter-spacing:-0.02em;margin:6px 0 8px;max-width:12ch;line-height:1.05;}
-  .highlight p{font-size:0.98rem;max-width:32ch;color:rgba(43,26,18,0.8);}
-
-  /* PILLS */
-  .pills{display:flex;gap:8px;overflow-x:auto;padding:2px 0 14px;scrollbar-width:none;}
-  .pills::-webkit-scrollbar{display:none;}
-  .pills a{flex:0 0 auto;background:rgba(255,255,255,0.08);color:var(--cream);padding:10px 16px;border-radius:100px;font-size:0.86rem;font-weight:700;text-decoration:none;white-space:nowrap;}
-
   /* CARDS */
   .card{background:var(--cream);color:var(--ink);border-radius:24px;padding:24px 22px;margin-bottom:14px;scroll-margin-top:80px;}
-  .cat-head{display:flex;align-items:baseline;gap:10px;}
-  .cat-num{font-family:'Fraunces',serif;font-style:italic;font-size:1.05rem;color:var(--accent-2);}
-  .cat-name{font-weight:800;font-size:1.5rem;letter-spacing:-0.02em;flex:1;}
-  .cat-when{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;color:var(--ink-soft);white-space:nowrap;}
-  .cat-desc{font-family:'Fraunces',serif;font-style:italic;font-size:0.98rem;color:var(--ink-soft);margin:8px 0 14px;padding-bottom:14px;border-bottom:1px solid var(--line);}
-  .mi{display:flex;align-items:baseline;gap:8px;padding:7px 0;}
-  .mi-name{font-weight:500;}
-  .mi-name small{display:block;font-size:0.82rem;color:var(--ink-soft);font-weight:400;}
-  .mi-dots{flex:1;border-bottom:1px dotted rgba(43,26,18,0.3);transform:translateY(-3px);min-width:12px;}
-  .mi-price{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums;}
-
   .card-title{font-weight:800;font-size:1.6rem;letter-spacing:-0.02em;margin:6px 0 4px;}
-  .card .eyebrow{color:var(--accent-2);}
+  .eyebrow{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:800;color:var(--accent-2);}
   .lead{font-family:'Fraunces',serif;font-style:italic;color:var(--ink-soft);margin-bottom:14px;}
   .hrow{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);}
   .hrow:last-child{border-bottom:none;}
@@ -116,26 +90,14 @@
 
   <div class="tabs-wrap">
     <div class="tabs">
-      <button class="tab active" data-tab="cardapio">Cardápio</button>
-      <button class="tab" data-tab="horarios">Horários</button>
+      <button class="tab active" data-tab="horarios">Horários</button>
       <button class="tab" data-tab="endereco">Endereço</button>
       <button class="tab" data-tab="pedidos">Pedidos</button>
     </div>
   </div>
 
   <main class="content">
-    <section class="pane active" id="cardapio">
-      <div class="highlight">
-        <div class="seal"><small>Só</small><b>hoje</b></div>
-        <div class="eyebrow" id="hlEyebrow"></div>
-        <h2 id="hlTitle"></h2>
-        <p id="hlText"></p>
-      </div>
-      <nav class="pills" id="pills"></nav>
-      <div id="menu"></div>
-    </section>
-
-    <section class="pane" id="horarios">
+    <section class="pane active" id="horarios">
       <div class="card">
         <div class="eyebrow">Horários</div>
         <h2 class="card-title">Quando estamos abertos.</h2>
@@ -186,18 +148,13 @@
    (Os valores abaixo são EXEMPLOS e precisam ser trocados.)
    ========================================================== */
 var SITE = {
-  tagline: "Lanches, porções e açaí · Embu das Artes",
+  tagline: "Embu das Artes · SP",
   whatsapp: "5511999999999",           // só números, com 55 + DDD
   instagram: "gordinos",               // sem @
   ifood: "",                           // link do iFood (deixe "" se não tiver)
   endereco: "Rua Exemplo, 123",
   cidade: "Embu das Artes · SP",
 
-  destaque: {
-    eyebrow: "Promoção",
-    titulo: "Combo Gordino",
-    texto: "X-Burger + fritas + refri lata por R$ 29,90."
-  },
 
   // Horários por dia: [abre, fecha] em horas (fecha pode passar da meia-noite, ex. 25 = 1h). null = fechado.
   horarios: {
@@ -208,26 +165,7 @@ var SITE = {
     4: [18, 23],  // Quinta
     5: [18, 24],  // Sexta
     6: [18, 24]   // Sábado
-  },
-
-  cardapio: [
-    { nome: "Lanches", quando: "todos os dias", desc: "No pão brioche, com maionese da casa.", itens: [
-      ["X-Burger", "Hambúrguer 150g, queijo", "22,90"],
-      ["X-Salada", "Hambúrguer, queijo, alface, tomate", "24,90"],
-      ["X-Bacon", "Hambúrguer, queijo, bacon crocante", "27,90"],
-      ["X-Tudo", "O Gordino completo", "34,90"]
-    ]},
-    { nome: "Porções", quando: "pra dividir", desc: "Inteira pra turma, meia pra você.", itens: [
-      ["Batata frita", "meia / inteira", "19,90"],
-      ["Calabresa acebolada", "", "32,90"],
-      ["Frango à passarinho", "", "38,90"]
-    ]},
-    { nome: "Bebidas", quando: "geladas", desc: "Refrigerantes, sucos e cervejas.", itens: [
-      ["Refrigerante lata", "", "6,00"],
-      ["Suco natural", "", "9,90"],
-      ["Refrigerante 2L", "", "14,00"]
-    ]}
-  ]
+  }
 };
 
 /* ============ não precisa mexer daqui pra baixo ============ */
@@ -237,26 +175,7 @@ function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&am
 function hh(n){ return (n % 24) + "h"; }
 
 $("tagline").textContent = SITE.tagline;
-$("hlEyebrow").textContent = SITE.destaque.eyebrow;
-$("hlTitle").textContent = SITE.destaque.titulo;
-$("hlText").textContent = SITE.destaque.texto;
 $("year").textContent = new Date().getFullYear();
-
-// Cardápio
-var pills = "", menu = "";
-SITE.cardapio.forEach(function(c, i){
-  var id = "cat-" + i, num = String(i + 1).padStart(2, "0");
-  pills += '<a href="#' + id + '">' + esc(c.nome) + '</a>';
-  menu += '<div class="card" id="' + id + '"><div class="cat-head"><span class="cat-num">' + num + '</span><span class="cat-name">' + esc(c.nome) +
-    '</span><span class="cat-when">' + esc(c.quando || "") + '</span></div><p class="cat-desc">' + esc(c.desc || "") + '</p>';
-  c.itens.forEach(function(it){
-    menu += '<div class="mi"><span class="mi-name">' + esc(it[0]) + (it[1] ? '<small>' + esc(it[1]) + '</small>' : '') +
-      '</span><span class="mi-dots"></span><span class="mi-price">R$ ' + esc(it[2]) + '</span></div>';
-  });
-  menu += '</div>';
-});
-$("pills").innerHTML = pills;
-$("menu").innerHTML = menu;
 
 // Horários
 var now = new Date(), today = now.getDay(), rows = "";
