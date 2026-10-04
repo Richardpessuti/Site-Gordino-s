@@ -30,7 +30,7 @@ var SITE = {
       titulo: "Zanaga",
       pedido: "https://loja.neemo.com.br/gordinos-marmitaria",
       whatsapp: "5519991953819",
-      mensagem: "Olá gostaria de fazer um pedido",
+      mensagem: "Olá gostaria de fazer um pedido!!!",
       endereco: "Av. Antônio Conselheiro, 332",
       bairro: "Antônio Zanaga II · Americana/SP",
       resumo: "De segunda a sábado, das 8h às 14h.",
