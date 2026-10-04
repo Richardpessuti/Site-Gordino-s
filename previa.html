@@ -93,12 +93,16 @@
   .qbtn{display:flex;align-items:center;justify-content:center;gap:8px;padding:15px 10px;border-radius:16px;font-weight:800;font-size:0.98rem;
     text-decoration:none;color:#fff;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);cursor:pointer;font-family:inherit;}
   .qbtn.wa{background:#1FA855;border-color:#1FA855;}
+  .qbtn.main{grid-column:1 / -1;background:var(--accent);border-color:var(--accent);color:var(--bg-1);font-size:1.15rem;padding:18px 10px;}
+  .qbtn.main svg{width:24px;height:24px;}
   .qbtn svg{width:20px;height:20px;flex:none;}
   .statusline{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-top:16px;font-size:0.86rem;font-weight:700;color:rgba(255,255,255,0.85);}
   .statusline span{display:inline-flex;align-items:center;gap:7px;}
-  .fab{position:fixed;right:18px;bottom:18px;z-index:60;width:60px;height:60px;border-radius:50%;background:#1FA855;display:grid;place-items:center;
+  .fab{position:fixed;right:16px;bottom:16px;z-index:60;height:56px;padding:0 22px;border-radius:100px;background:var(--accent);color:var(--bg-1);display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:1rem;
     box-shadow:0 10px 24px rgba(0,0,0,0.4);}
-  .fab svg{width:32px;height:32px;}
+  .fab svg{width:22px;height:22px;}
+  .fab{transition:opacity .2s,transform .2s;}
+  .fab.hide{opacity:0;transform:translateY(20px);pointer-events:none;}
   .mapbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:56px;margin-top:12px;border-radius:16px;border:1.5px dashed var(--line);
     background:transparent;color:var(--ink-soft);font-family:inherit;font-weight:700;font-size:0.95rem;cursor:pointer;}
   .btnrow{display:flex;flex-wrap:wrap;gap:10px;}
@@ -129,7 +133,8 @@
     <p class="hero-tag" id="tagline"></p>
     <div class="statusline" id="statuses"></div>
     <div class="quick">
-      <a class="qbtn wa" id="qWa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg>Pedir agora</a>
+      <a class="qbtn main" id="qPedido" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Fazer pedido</a>
+      <a class="qbtn wa" id="qWa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true" class="wai"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg>WhatsApp</a>
       <button class="qbtn" id="qGo" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Como chegar</button>
     </div>
   </header>
@@ -150,12 +155,11 @@
       <div class="card">
         <div class="eyebrow">Pedidos</div>
         <h2 class="card-title">Faça seu pedido.</h2>
-        <p class="lead">Retirada no balcão ou entrega na região.</p>
+        <p class="lead">Peça pelo nosso site de pedidos, sem precisar mandar mensagem.</p>
         <ul class="list">
-          <li>Escolha a unidade mais perto de você</li>
-          <li>Mande o pedido e o endereço</li>
-          <li>Confirmamos o valor e o tempo de preparo</li>
-          <li>Pagamento: Pix, cartão ou dinheiro</li>
+          <li>Veja o cardápio</li>
+          <li>Monte seu pedido</li>
+          <li>Finalize direto no site</li>
         </ul>
         <a class="btn" id="pedidoBtn" target="_blank" rel="noopener">Fazer meu pedido &rarr;</a>
       </div>
@@ -170,7 +174,7 @@
       <div class="card">
         <div class="eyebrow">WhatsApp</div>
         <h2 class="card-title">Fale com a gente.</h2>
-        <p class="lead">Dúvidas, encomendas e pedidos direto pelo WhatsApp.</p>
+        <p class="lead">Dúvidas e encomendas. Pra pedir, use o botão "Fazer pedido".</p>
         <a class="btn wa" id="waBtn" target="_blank" rel="noopener">Abrir WhatsApp &rarr;</a>
       </div>
     </section>
@@ -185,11 +189,11 @@
     </section>
   </main>
 
-  <a class="fab" id="fab" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg></a>
+  <a class="fab" id="fab" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Fazer pedido</a>
 
   <div class="sheet-bg" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
     <div class="sheet">
-      <h3 id="sheetTitle">Pedir em qual unidade?</h3>
+      <h3 id="sheetTitle">Falar com qual unidade?</h3>
       <p>Você vai direto pro WhatsApp da loja escolhida.</p>
       <div id="sheetOpts"></div>
       <button class="cancel" type="button" id="sheetClose">Cancelar</button>
@@ -211,9 +215,9 @@ var SITE = {
   tagline: "Restaurante e marmitaria · Americana/SP",
   whatsapp: "5511999999999",           // só números, com 55 + DDD
   instagram: "gordinos",               // sem @
-  pedido: "",                          // link de pedido online (deixe "" para usar o WhatsApp)
+  pedido: "https://loja.neemo.com.br/grupogordinos",  // site de pedidos
   ifood: "",                           // link do iFood (deixe "" se não tiver)
-  site: "",                            // link do site do Gordino's
+  site: "https://loja.neemo.com.br/grupogordinos",    // link do site do Gordino's
 
   // Unidades (aparecem na aba Unidades). Horários: [abre, fecha] em horas; null = fechado.
   // Dias: 0 = Domingo, 1 = Segunda ... 6 = Sábado.
@@ -251,7 +255,7 @@ var now = new Date(), today = now.getDay();
 
 // Link do WhatsApp de uma unidade, já com a mensagem dizendo qual é a loja
 function waUrl(u){
-  return "https://wa.me/" + (u.whatsapp || SITE.whatsapp) + "?text=" + encodeURIComponent("Olá! Quero fazer um pedido na unidade " + u.aba + ".");
+  return "https://wa.me/" + (u.whatsapp || SITE.whatsapp) + "?text=" + encodeURIComponent("Olá! Vim pelo site e quero falar com a unidade " + u.aba + ".");
 }
 
 // Status aberto/fechado de uma unidade (considera horário que passa da meia-noite)
@@ -290,7 +294,8 @@ SITE.unidades.forEach(function(u, i){
     '<h2 class="card-title">' + esc(u.titulo) + '</h2>' +
     '<div class="unit-status">' + dot + esc(st.text) + '</div>' +
     '<p class="addr"><b>' + esc(u.endereco) + '</b><br>' + esc(u.bairro) + '</p>' +
-    '<div class="btnrow"><a class="btn" target="_blank" rel="noopener" href="https://maps.google.com/?q=' + q + '">Como chegar</a>' +
+    '<div class="btnrow"><a class="btn" target="_blank" rel="noopener" href="' + SITE.pedido + '">Fazer pedido</a>' +
+    '<a class="btn ghost" target="_blank" rel="noopener" href="https://maps.google.com/?q=' + q + '">Como chegar</a>' +
     '<a class="btn ghost" target="_blank" rel="noopener" href="' + waUrl(u) + '">WhatsApp</a></div>' +
     '<button class="mapbtn" type="button" data-q="' + q + '" data-t="' + esc(u.aba) + '">Ver no mapa</button>' +
     '<div class="card-sub">Horários</div><p class="lead">' + esc(u.resumo) + '</p>' + rows +
@@ -301,7 +306,7 @@ $("unidades").innerHTML = unitsHtml;
 
 // Pedido, WhatsApp, iFood, site, Instagram
 // Botões gerais de WhatsApp abrem a escolha da unidade
-var WAICON = $("fab").innerHTML, opts = "";
+var WAICON = $("qWa").querySelector("svg").outerHTML, opts = "";
 SITE.unidades.forEach(function(u){
   opts += '<a class="opt" target="_blank" rel="noopener" href="' + waUrl(u) + '"><span><b>' + esc(u.titulo) + '</b><small>' +
     '<span class="dot' + (u.st.open ? '' : ' closed') + '"></span>' + esc(u.st.text) + '</small></span><span class="go">' + WAICON + '</span></a>';
@@ -312,8 +317,10 @@ function closeSheet(){ $("sheet").classList.remove("open"); }
 $("sheetClose").addEventListener("click", closeSheet);
 $("sheet").addEventListener("click", function(e){ if (e.target === this || e.target.closest(".opt")) closeSheet(); });
 document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeSheet(); });
-["qWa","fab","waBtn"].forEach(function(id){ $(id).href = "#"; $(id).removeAttribute("target"); $(id).addEventListener("click", openSheet); });
-if (SITE.pedido){ $("pedidoBtn").href = SITE.pedido; } else { $("pedidoBtn").href = "#"; $("pedidoBtn").removeAttribute("target"); $("pedidoBtn").addEventListener("click", openSheet); }
+["qWa","waBtn"].forEach(function(id){ $(id).href = "#"; $(id).removeAttribute("target"); $(id).addEventListener("click", openSheet); });
+["pedidoBtn","qPedido","fab"].forEach(function(id){
+  if (SITE.pedido){ $(id).href = SITE.pedido; } else { $(id).href = "#"; $(id).removeAttribute("target"); $(id).addEventListener("click", openSheet); }
+});
 if (SITE.site){ $("siteBtn").href = SITE.site; } else { $("site").querySelector(".lead").textContent = "Em breve."; $("siteBtn").hidden = true; }
 if (SITE.ifood){ $("ifoodCard").hidden = false; $("ifoodBtn").href = SITE.ifood; }
 $("qGo").addEventListener("click", function(){ document.querySelector('[data-tab="unidades"]').click(); setTimeout(function(){ $("unidades").scrollIntoView({behavior:"smooth"}); }, 50); });
@@ -324,6 +331,11 @@ document.querySelectorAll(".mapbtn").forEach(function(b){
     b.replaceWith(m);
   });
 });
+// Botão flutuante só aparece depois que o "Fazer pedido" do topo sai da tela
+if ("IntersectionObserver" in window){
+  $("fab").classList.add("hide");
+  new IntersectionObserver(function(e){ $("fab").classList.toggle("hide", e[0].isIntersecting); }).observe($("qPedido"));
+}
 $("igBtn").href = "https://instagram.com/" + SITE.instagram;
 $("igBtn").textContent = "@" + SITE.instagram;
 
