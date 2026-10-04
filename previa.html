@@ -100,9 +100,6 @@
     box-shadow:0 10px 24px rgba(0,0,0,0.4);}
   .fab svg{width:22px;height:22px;}
   .fab{transition:opacity .2s,transform .2s;}
-  .wa-side{position:fixed;right:0;bottom:92px;z-index:60;width:44px;height:50px;border:none;border-radius:14px 0 0 14px;
-    background:#1FA855;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,0.35);}
-  .wa-side svg{width:26px;height:26px;}
   .fab.hide{opacity:0;transform:translateY(20px);pointer-events:none;}
   .mapbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:56px;margin-top:12px;border-radius:16px;border:1.5px dashed var(--line);
     background:transparent;color:var(--ink-soft);font-family:inherit;font-weight:700;font-size:0.95rem;cursor:pointer;}
@@ -119,7 +116,7 @@
   .opt b{display:block;font-size:1.05rem;}
   .opt small{display:flex;align-items:center;gap:6px;color:var(--ink-soft);font-size:0.84rem;}
   .opt .go{margin-left:auto;width:40px;height:40px;border-radius:50%;background:#1FA855;display:grid;place-items:center;flex:none;}
-  .opt .go svg{width:22px;height:22px;}
+  .opt .go svg{width:22px;height:22px;color:#fff;}
   .opt .go.pin{background:var(--accent-2);}
   #unidades .card{scroll-margin-top:16px;}
   .sheet .cancel{width:100%;margin-top:4px;padding:14px;border:none;border-radius:100px;background:transparent;color:var(--ink-soft);font-family:inherit;font-weight:700;font-size:0.95rem;cursor:pointer;}
@@ -147,7 +144,6 @@
     <section id="unidades"></section>
   </main>
 
-  <button class="wa-side" id="waSide" type="button" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true" class="wai"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg></button>
   <a class="fab" id="fab" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Fazer pedido</a>
 
   <div class="sheet-bg" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
@@ -264,7 +260,7 @@ $("statuses").innerHTML = statusHtml;
 $("unidades").innerHTML = unitsHtml;
 
 // Janela de escolha da unidade: "wa" abre o WhatsApp da loja, "go" mostra o cartão da unidade
-var WAICON = $("waSide").innerHTML, PINICON = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+var WAICON = $("qFale").querySelector("svg").outerHTML, PINICON = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>';
 var SHEETS = {
   wa: { titulo: "Falar com qual unidade?", texto: "Você vai direto pro WhatsApp da loja escolhida." },
   go: { titulo: "Qual unidade?", texto: "Veja endereço, horários e como chegar." }
@@ -294,7 +290,6 @@ $("sheet").addEventListener("click", function(e){
   if (e.target === this || opt) closeSheet();
 });
 document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeSheet(); });
-$("waSide").addEventListener("click", function(){ openSheet("wa"); });
 $("qGo").addEventListener("click", function(){ openSheet("go"); });
 $("qFale").addEventListener("click", function(){ openSheet("wa"); });
 $("qSite").href = SITE.site;
