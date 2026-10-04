@@ -44,18 +44,8 @@
   .dot{width:9px;height:9px;border-radius:50%;background:#5FD07A;box-shadow:0 0 0 3px rgba(95,208,122,0.25);}
   .dot.closed{background:#E9927C;box-shadow:0 0 0 3px rgba(233,146,124,0.25);}
 
-  /* TABS */
-  .tabs-wrap{padding:12px 16px 6px;position:sticky;top:0;z-index:40;background:rgba(30,18,12,0.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
-  .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:rgba(255,255,255,0.07);padding:5px;border-radius:22px;}
-  .tab{line-height:1.2;}
-  @media (min-width:520px){.tabs{border-radius:100px;}}
-  .tab{flex:1;border:none;background:transparent;color:rgba(255,255,255,0.8);font-family:inherit;font-weight:700;font-size:0.9rem;
-    padding:11px 6px;border-radius:100px;cursor:pointer;transition:all .2s;}
-  .tab.active{background:var(--accent);color:var(--bg-1);}
 
   .content{padding:16px 16px 8px;}
-  .pane{display:none;animation:fade .25s ease;}
-  .pane.active{display:block;}
   @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 
   /* CARDS */
@@ -127,6 +117,8 @@
   .opt small{display:flex;align-items:center;gap:6px;color:var(--ink-soft);font-size:0.84rem;}
   .opt .go{margin-left:auto;width:40px;height:40px;border-radius:50%;background:#1FA855;display:grid;place-items:center;flex:none;}
   .opt .go svg{width:22px;height:22px;}
+  .opt .go.pin{background:var(--accent-2);}
+  #unidades .card{scroll-margin-top:16px;}
   .sheet .cancel{width:100%;margin-top:4px;padding:14px;border:none;border-radius:100px;background:transparent;color:var(--ink-soft);font-family:inherit;font-weight:700;font-size:0.95rem;cursor:pointer;}
 
   @media (max-width:420px){.hero-name{font-size:2.4rem;}}
@@ -146,44 +138,8 @@
     </div>
   </header>
 
-  <div class="tabs-wrap">
-    <div class="tabs">
-      <button class="tab active" data-tab="unidades">Unidades</button>
-      <button class="tab" data-tab="pedido">Faça seu pedido</button>
-      <button class="tab" data-tab="site">Site do Gordino's</button>
-    </div>
-  </div>
-
-  <main class="content" id="panes">
-    <section class="pane active" id="unidades"></section>
-
-    <section class="pane" id="pedido">
-      <div class="card">
-        <div class="eyebrow">Pedidos</div>
-        <h2 class="card-title">Faça seu pedido.</h2>
-        <p class="lead">Peça pelo nosso site de pedidos, sem precisar mandar mensagem.</p>
-        <ul class="list">
-          <li>Veja o cardápio</li>
-          <li>Monte seu pedido</li>
-          <li>Finalize direto no site</li>
-        </ul>
-        <a class="btn" id="pedidoBtn" target="_blank" rel="noopener">Fazer meu pedido &rarr;</a>
-      </div>
-      <div class="card" id="ifoodCard" hidden>
-        <div class="eyebrow">Delivery</div>
-        <h2 class="card-title">Também no iFood.</h2>
-        <a class="btn" id="ifoodBtn" target="_blank" rel="noopener">Pedir pelo iFood &rarr;</a>
-      </div>
-    </section>
-
-    <section class="pane" id="site">
-      <div class="card">
-        <div class="eyebrow">Gordino's</div>
-        <h2 class="card-title">Site do Gordino's.</h2>
-        <p class="lead">Conheça mais sobre a casa.</p>
-        <a class="btn" id="siteBtn" target="_blank" rel="noopener">Acessar o site &rarr;</a>
-      </div>
-    </section>
+  <main class="content">
+    <section id="unidades"></section>
   </main>
 
   <button class="wa-side" id="waSide" type="button" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true" class="wai"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg></button>
@@ -191,8 +147,8 @@
 
   <div class="sheet-bg" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
     <div class="sheet">
-      <h3 id="sheetTitle">Falar com qual unidade?</h3>
-      <p>Você vai direto pro WhatsApp da loja escolhida.</p>
+      <h3 id="sheetTitle"></h3>
+      <p id="sheetText"></p>
       <div id="sheetOpts"></div>
       <button class="cancel" type="button" id="sheetClose">Cancelar</button>
     </div>
@@ -207,17 +163,15 @@
 <script>
 /* ==========================================================
    DADOS DO GORDINO'S — edite só esta parte.
-   whatsapp, instagram, pedido e site ainda são EXEMPLOS / vazios.
+   whatsapp e instagram ainda são EXEMPLOS.
    ========================================================== */
 var SITE = {
   tagline: "Restaurante e marmitaria · Americana/SP",
   whatsapp: "5511999999999",           // só números, com 55 + DDD
   instagram: "gordinos",               // sem @
   pedido: "https://loja.neemo.com.br/grupogordinos",  // site de pedidos
-  ifood: "",                           // link do iFood (deixe "" se não tiver)
-  site: "https://loja.neemo.com.br/grupogordinos",    // link do site do Gordino's
 
-  // Unidades (aparecem na aba Unidades). Horários: [abre, fecha] em horas; null = fechado.
+  // Unidades (aparecem ao tocar em "Como chegar"). Horários: [abre, fecha] em horas; null = fechado.
   // Dias: 0 = Domingo, 1 = Segunda ... 6 = Sábado.
   unidades: [
     {
@@ -288,7 +242,7 @@ SITE.unidades.forEach(function(u, i){
   }
 
   u.st = st;
-  unitsHtml += '<div class="card" id="' + u.id + '">' +
+  unitsHtml += '<div class="card" id="' + u.id + '" hidden>' +
     '<div class="eyebrow">' + esc(u.aba) + '</div>' +
     '<h2 class="card-title">' + esc(u.titulo) + '</h2>' +
     '<div class="unit-status">' + dot + esc(st.text) + '</div>' +
@@ -303,26 +257,40 @@ SITE.unidades.forEach(function(u, i){
 $("statuses").innerHTML = statusHtml;
 $("unidades").innerHTML = unitsHtml;
 
-// Pedido, WhatsApp, iFood, site, Instagram
-// Botões gerais de WhatsApp abrem a escolha da unidade
-var WAICON = $("waSide").innerHTML, opts = "";
-SITE.unidades.forEach(function(u){
-  opts += '<a class="opt" target="_blank" rel="noopener" href="' + waUrl(u) + '"><span><b>' + esc(u.aba + " · " + u.titulo) + '</b><small>' +
-    '<span class="dot' + (u.st.open ? '' : ' closed') + '"></span>' + esc(u.st.text) + '</small></span><span class="go">' + WAICON + '</span></a>';
-});
-$("sheetOpts").innerHTML = opts;
-function openSheet(e){ e.preventDefault(); $("sheet").classList.add("open"); }
+// Janela de escolha da unidade: "wa" abre o WhatsApp da loja, "go" mostra o cartão da unidade
+var WAICON = $("waSide").innerHTML, PINICON = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+var SHEETS = {
+  wa: { titulo: "Falar com qual unidade?", texto: "Você vai direto pro WhatsApp da loja escolhida." },
+  go: { titulo: "Qual unidade?", texto: "Veja endereço, horários e como chegar." }
+};
+function openSheet(modo){
+  var opts = "";
+  SITE.unidades.forEach(function(u){
+    var info = '<span><b>' + esc(u.aba + " · " + u.titulo) + '</b><small><span class="dot' + (u.st.open ? '' : ' closed') + '"></span>' + esc(u.st.text) + '</small></span>';
+    opts += modo === "wa"
+      ? '<a class="opt" target="_blank" rel="noopener" href="' + waUrl(u) + '">' + info + '<span class="go">' + WAICON + '</span></a>'
+      : '<a class="opt" href="#' + u.id + '" data-unit="' + u.id + '">' + info + '<span class="go pin">' + PINICON + '</span></a>';
+  });
+  $("sheetTitle").textContent = SHEETS[modo].titulo;
+  $("sheetText").textContent = SHEETS[modo].texto;
+  $("sheetOpts").innerHTML = opts;
+  $("sheet").classList.add("open");
+}
 function closeSheet(){ $("sheet").classList.remove("open"); }
+function showUnit(id){
+  SITE.unidades.forEach(function(u){ $(u.id).hidden = u.id !== id; });
+  $(id).scrollIntoView({ behavior: "smooth", block: "start" });
+}
 $("sheetClose").addEventListener("click", closeSheet);
-$("sheet").addEventListener("click", function(e){ if (e.target === this || e.target.closest(".opt")) closeSheet(); });
-document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeSheet(); });
-$("waSide").addEventListener("click", openSheet);
-["pedidoBtn","qPedido","fab"].forEach(function(id){
-  if (SITE.pedido){ $(id).href = SITE.pedido; } else { $(id).href = "#"; $(id).removeAttribute("target"); $(id).addEventListener("click", openSheet); }
+$("sheet").addEventListener("click", function(e){
+  var opt = e.target.closest(".opt");
+  if (opt && opt.dataset.unit){ e.preventDefault(); closeSheet(); showUnit(opt.dataset.unit); return; }
+  if (e.target === this || opt) closeSheet();
 });
-if (SITE.site){ $("siteBtn").href = SITE.site; } else { $("site").querySelector(".lead").textContent = "Em breve."; $("siteBtn").hidden = true; }
-if (SITE.ifood){ $("ifoodCard").hidden = false; $("ifoodBtn").href = SITE.ifood; }
-$("qGo").addEventListener("click", function(){ document.querySelector('[data-tab="unidades"]').click(); setTimeout(function(){ $("unidades").scrollIntoView({behavior:"smooth"}); }, 50); });
+document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeSheet(); });
+$("waSide").addEventListener("click", function(){ openSheet("wa"); });
+$("qGo").addEventListener("click", function(){ openSheet("go"); });
+["qPedido","fab"].forEach(function(id){ $(id).href = SITE.pedido; });
 document.querySelectorAll(".mapbtn").forEach(function(b){
   b.addEventListener("click", function(){
     var m = document.createElement("div"); m.className = "map";
@@ -338,17 +306,6 @@ if ("IntersectionObserver" in window){
 $("igBtn").href = "https://instagram.com/" + SITE.instagram;
 $("igBtn").textContent = "@" + SITE.instagram;
 
-// Abas
-var tabs = document.querySelectorAll(".tab"), panes = document.querySelectorAll(".pane");
-tabs.forEach(function(t){
-  t.addEventListener("click", function(){
-    tabs.forEach(function(x){ x.classList.remove("active"); });
-    panes.forEach(function(x){ x.classList.remove("active"); });
-    t.classList.add("active");
-    $(t.dataset.tab).classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-});
 </script>
 </body>
 </html>
