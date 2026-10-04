@@ -82,8 +82,10 @@ SITE.unidades.forEach(function(u, i){
     '<div class="btnrow"><a class="btn" target="_blank" rel="noopener" href="' + u.pedido + '">Fazer pedido</a>' +
     '<a class="btn ghost" target="_blank" rel="noopener" href="https://maps.google.com/?q=' + q + '">Como chegar</a>' +
     '</div>' +
-    '<button class="mapbtn" type="button" data-q="' + q + '" data-t="' + esc(u.titulo) + '">Ver no mapa</button>' +
+    '<div class="map"><iframe loading="lazy" title="Mapa ' + esc(u.titulo) + '" src="https://www.google.com/maps?q=' + q + '&output=embed"></iframe></div>' +
     '<div class="card-sub">Horários</div><p class="lead">' + esc(u.resumo) + '</p>' + rows +
+    '<p class="obs"><b>Feriados:</b> o horário pode mudar. Consulte a unidade para saber se ela estará aberta. ' +
+    '<a target="_blank" rel="noopener" href="' + waUrl(u) + '">Falar com a unidade</a></p>' +
     '</div>';
 });
 $("statuses").innerHTML = statusHtml;
@@ -124,13 +126,6 @@ $("qGo").addEventListener("click", function(){ openSheet("go"); });
 $("qFale").addEventListener("click", function(){ openSheet("wa"); });
 $("qSite").href = SITE.site;
 ["qPedido","fab"].forEach(function(id){ $(id).href = SITE.pedido; });
-document.querySelectorAll(".mapbtn").forEach(function(b){
-  b.addEventListener("click", function(){
-    var m = document.createElement("div"); m.className = "map";
-    m.innerHTML = '<iframe title="Mapa ' + b.dataset.t + '" src="https://www.google.com/maps?q=' + b.dataset.q + '&output=embed"></iframe>';
-    b.replaceWith(m);
-  });
-});
 // Botão flutuante só aparece depois que o "Fazer pedido" do topo sai da tela
 if ("IntersectionObserver" in window){
   $("fab").classList.add("hide");
