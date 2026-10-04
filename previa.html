@@ -104,6 +104,18 @@
   .btnrow{display:flex;flex-wrap:wrap;gap:10px;}
   .btn.ghost{background:transparent;color:var(--accent-2);border:1.5px solid var(--accent-2);}
   .footer{padding-bottom:100px;}
+  .sheet-bg{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,0.55);display:none;align-items:flex-end;justify-content:center;}
+  .sheet-bg.open{display:flex;animation:fade .2s ease;}
+  .sheet{width:100%;max-width:560px;background:var(--cream);color:var(--ink);border-radius:26px 26px 0 0;padding:22px 18px 28px;}
+  .sheet h3{font-weight:800;font-size:1.3rem;margin:0 4px 4px;}
+  .sheet p{color:var(--ink-soft);font-size:0.92rem;margin:0 4px 14px;}
+  .opt{display:flex;align-items:center;gap:12px;padding:16px;border-radius:18px;background:#fff;border:1px solid var(--line);
+    text-decoration:none;color:var(--ink);margin-bottom:10px;}
+  .opt b{display:block;font-size:1.05rem;}
+  .opt small{display:flex;align-items:center;gap:6px;color:var(--ink-soft);font-size:0.84rem;}
+  .opt .go{margin-left:auto;width:40px;height:40px;border-radius:50%;background:#1FA855;display:grid;place-items:center;flex:none;}
+  .opt .go svg{width:22px;height:22px;}
+  .sheet .cancel{width:100%;margin-top:4px;padding:14px;border:none;border-radius:100px;background:transparent;color:var(--ink-soft);font-family:inherit;font-weight:700;font-size:0.95rem;cursor:pointer;}
 
   @media (max-width:420px){.hero-name{font-size:2.4rem;}}
 </style>
@@ -175,6 +187,15 @@
 
   <a class="fab" id="fab" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg></a>
 
+  <div class="sheet-bg" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="sheet">
+      <h3 id="sheetTitle">Pedir em qual unidade?</h3>
+      <p>Você vai direto pro WhatsApp da loja escolhida.</p>
+      <div id="sheetOpts"></div>
+      <button class="cancel" type="button" id="sheetClose">Cancelar</button>
+    </div>
+  </div>
+
   <footer class="footer">
     <a class="ig" id="igBtn" target="_blank" rel="noopener"></a>
     <p class="copy">© <span id="year"></span> Gordino's</p>
@@ -201,6 +222,7 @@ var SITE = {
       id: "restaurante",
       aba: "Restaurante",
       titulo: "Restaurante",
+      whatsapp: "",                    // WhatsApp desta unidade ("" = usa o número geral)
       endereco: "Rua São Vito, 1812",
       bairro: "Santa Cruz · Americana/SP",
       resumo: "Todos os dias, das 8h às 14h.",
@@ -210,6 +232,7 @@ var SITE = {
       id: "marmitaria",
       aba: "Marmitaria",
       titulo: "Marmitaria · Loja 2",
+      whatsapp: "",                    // WhatsApp desta unidade ("" = usa o número geral)
       endereco: "Av. Antônio Conselheiro, 332",
       bairro: "Antônio Zanaga II · Americana/SP",
       resumo: "De segunda a sábado, das 8h às 14h.",
@@ -225,6 +248,11 @@ function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&am
 function hh(n){ return (n % 24) + "h"; }
 
 var now = new Date(), today = now.getDay();
+
+// Link do WhatsApp de uma unidade, já com a mensagem dizendo qual é a loja
+function waUrl(u){
+  return "https://wa.me/" + (u.whatsapp || SITE.whatsapp) + "?text=" + encodeURIComponent("Olá! Quero fazer um pedido na unidade " + u.aba + ".");
+}
 
 // Status aberto/fechado de uma unidade (considera horário que passa da meia-noite)
 function status(hor){
@@ -256,13 +284,14 @@ SITE.unidades.forEach(function(u, i){
       '</span><span class="h">' + (h ? hh(h[0]) + ' às ' + hh(h[1]) : 'Fechado') + '</span></div>';
   }
 
+  u.st = st;
   unitsHtml += '<div class="card" id="' + u.id + '">' +
     '<div class="eyebrow">' + esc(u.aba) + '</div>' +
     '<h2 class="card-title">' + esc(u.titulo) + '</h2>' +
     '<div class="unit-status">' + dot + esc(st.text) + '</div>' +
     '<p class="addr"><b>' + esc(u.endereco) + '</b><br>' + esc(u.bairro) + '</p>' +
     '<div class="btnrow"><a class="btn" target="_blank" rel="noopener" href="https://maps.google.com/?q=' + q + '">Como chegar</a>' +
-    '<a class="btn ghost wa-link" target="_blank" rel="noopener">WhatsApp</a></div>' +
+    '<a class="btn ghost" target="_blank" rel="noopener" href="' + waUrl(u) + '">WhatsApp</a></div>' +
     '<button class="mapbtn" type="button" data-q="' + q + '" data-t="' + esc(u.aba) + '">Ver no mapa</button>' +
     '<div class="card-sub">Horários</div><p class="lead">' + esc(u.resumo) + '</p>' + rows +
     '</div>';
@@ -271,14 +300,22 @@ $("statuses").innerHTML = statusHtml;
 $("unidades").innerHTML = unitsHtml;
 
 // Pedido, WhatsApp, iFood, site, Instagram
-var wa = "https://wa.me/" + SITE.whatsapp;
-$("waBtn").href = wa;
-$("pedidoBtn").href = SITE.pedido || wa + "?text=" + encodeURIComponent("Olá! Quero fazer um pedido.");
+// Botões gerais de WhatsApp abrem a escolha da unidade
+var WAICON = $("fab").innerHTML, opts = "";
+SITE.unidades.forEach(function(u){
+  opts += '<a class="opt" target="_blank" rel="noopener" href="' + waUrl(u) + '"><span><b>' + esc(u.titulo) + '</b><small>' +
+    '<span class="dot' + (u.st.open ? '' : ' closed') + '"></span>' + esc(u.st.text) + '</small></span><span class="go">' + WAICON + '</span></a>';
+});
+$("sheetOpts").innerHTML = opts;
+function openSheet(e){ e.preventDefault(); $("sheet").classList.add("open"); }
+function closeSheet(){ $("sheet").classList.remove("open"); }
+$("sheetClose").addEventListener("click", closeSheet);
+$("sheet").addEventListener("click", function(e){ if (e.target === this || e.target.closest(".opt")) closeSheet(); });
+document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeSheet(); });
+["qWa","fab","waBtn"].forEach(function(id){ $(id).href = "#"; $(id).removeAttribute("target"); $(id).addEventListener("click", openSheet); });
+if (SITE.pedido){ $("pedidoBtn").href = SITE.pedido; } else { $("pedidoBtn").href = "#"; $("pedidoBtn").removeAttribute("target"); $("pedidoBtn").addEventListener("click", openSheet); }
 if (SITE.site){ $("siteBtn").href = SITE.site; } else { $("site").querySelector(".lead").textContent = "Em breve."; $("siteBtn").hidden = true; }
 if (SITE.ifood){ $("ifoodCard").hidden = false; $("ifoodBtn").href = SITE.ifood; }
-$("qWa").href = $("pedidoBtn").href;
-$("fab").href = wa;
-document.querySelectorAll(".wa-link").forEach(function(a){ a.href = wa; });
 $("qGo").addEventListener("click", function(){ document.querySelector('[data-tab="unidades"]').click(); setTimeout(function(){ $("unidades").scrollIntoView({behavior:"smooth"}); }, 50); });
 document.querySelectorAll(".mapbtn").forEach(function(b){
   b.addEventListener("click", function(){
