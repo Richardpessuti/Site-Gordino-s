@@ -61,7 +61,7 @@ function status(hor){
   for (var i = 0; i < 7; i++){
     var d = (today + i) % 7, x = hor[d];
     if (x && (i > 0 || t < x[0]))
-      return { open: false, text: "Fechada · abre " + (i === 0 ? "hoje" : i === 1 ? "amanhã" : DIAS[d].toLowerCase()) + " às " + hh(x[0]) };
+      return { open: false, text: "Fechada · Abre " + (i === 0 ? "hoje" : i === 1 ? "amanhã" : DIAS[d].toLowerCase()) + " às " + hh(x[0]) };
   }
   return { open: false, text: "Fechada" };
 }
