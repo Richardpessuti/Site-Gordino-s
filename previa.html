@@ -87,6 +87,9 @@
   .qbtn.main{grid-column:1 / -1;background:var(--accent);border-color:var(--accent);color:var(--bg-1);font-size:1.15rem;padding:18px 10px;}
   .qbtn.main svg{width:24px;height:24px;}
   .qbtn.go{grid-column:1 / -1;}
+  .qbtn.sm{line-height:1.2;grid-column:1 / -1;padding:12px 8px;font-size:0.92rem;font-weight:700;background:transparent;color:rgba(255,255,255,0.85);}
+  .qbtn.sm svg{width:18px;height:18px;}
+  .qbtn.sm + .qbtn.sm{margin-top:-2px;}
   .qbtn svg{width:20px;height:20px;flex:none;}
   .statusline{display:grid;justify-content:center;gap:8px;margin-top:18px;font-size:0.8rem;font-weight:700;color:rgba(255,255,255,0.85);}
   .statusline > span{display:flex;align-items:center;gap:7px;white-space:nowrap;padding:8px 14px;border-radius:100px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);}
@@ -135,6 +138,8 @@
     <div class="quick">
       <a class="qbtn main" id="qPedido" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Fazer pedido</a>
       <button class="qbtn go" id="qGo" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Como chegar</button>
+      <button class="qbtn sm" id="qFale" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg>Fale conosco</button>
+      <a class="qbtn sm" id="qSite" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>Site do Gordino's</a>
     </div>
   </header>
 
@@ -170,6 +175,7 @@ var SITE = {
   whatsapp: "5511999999999",           // só números, com 55 + DDD
   instagram: "gordinos",               // sem @
   pedido: "https://loja.neemo.com.br/grupogordinos",  // site de pedidos
+  site: "https://loja.neemo.com.br/grupogordinos",    // site do Gordino's (trocar se for outro endereço)
 
   // Unidades (aparecem ao tocar em "Como chegar"). Horários: [abre, fecha] em horas; null = fechado.
   // Dias: 0 = Domingo, 1 = Segunda ... 6 = Sábado.
@@ -290,6 +296,8 @@ $("sheet").addEventListener("click", function(e){
 document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeSheet(); });
 $("waSide").addEventListener("click", function(){ openSheet("wa"); });
 $("qGo").addEventListener("click", function(){ openSheet("go"); });
+$("qFale").addEventListener("click", function(){ openSheet("wa"); });
+$("qSite").href = SITE.site;
 ["qPedido","fab"].forEach(function(id){ $(id).href = SITE.pedido; });
 document.querySelectorAll(".mapbtn").forEach(function(b){
   b.addEventListener("click", function(){
