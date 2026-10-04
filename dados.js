@@ -3,7 +3,7 @@
    instagram ainda é EXEMPLO.
    ========================================================== */
 var SITE = {
-  tagline: "Restaurante e marmitaria · Americana/SP",
+  tagline: "Restaurante e Marmitaria · Americana/SP",
   whatsapp: "5519981650101",           // número geral (só números, com 55 + DDD)
   instagram: "gordinos",               // sem @
   pedido: "pedido.html",               // página "Fazer pedido" (escolha da unidade)

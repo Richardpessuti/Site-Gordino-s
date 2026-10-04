@@ -63,7 +63,7 @@ var statusHtml = "", unitsHtml = "";
 SITE.unidades.forEach(function(u, i){
   var st = status(u.horarios), dot = '<span class="dot' + (st.open ? '' : ' closed') + '"></span>';
   var q = encodeURIComponent(u.endereco + ", " + u.bairro.replace(/·/g, ","));
-  var curto = st.open ? st.text.replace("Aberta agora · até", "aberta até") : st.text.replace("Fechada · ", "");
+  var curto = st.open ? st.text.replace("Aberta agora · até", "Aberta até") : st.text.replace("Fechada · a", "A");
   statusHtml += '<span>' + dot + esc(u.aba + " · " + u.titulo) + '<em>' + esc(curto) + '</em></span>';
 
   var rows = "";
