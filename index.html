@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gordino's</title>
 <link rel="icon" href="logo.webp">
-<meta name="description" content="Gordino's — restaurante e marmitaria em Americana/SP: horários, endereços e pedidos.">
+<meta name="description" content="Gordino's — restaurante e marmitaria em Americana/SP: unidades, horários e pedidos.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
@@ -40,7 +40,8 @@
 
   /* TABS */
   .tabs-wrap{padding:12px 16px 6px;position:sticky;top:0;z-index:40;background:rgba(30,18,12,0.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
-  .tabs{display:flex;gap:4px;background:rgba(255,255,255,0.07);padding:5px;border-radius:100px;}
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:rgba(255,255,255,0.07);padding:5px;border-radius:22px;}
+  @media (min-width:520px){.tabs{grid-template-columns:repeat(4,1fr);border-radius:100px;}}
   .tab{flex:1;border:none;background:transparent;color:rgba(255,255,255,0.8);font-family:inherit;font-weight:700;font-size:0.9rem;
     padding:11px 6px;border-radius:100px;cursor:pointer;transition:all .2s;}
   .tab.active{background:var(--accent);color:var(--bg-1);}
@@ -81,7 +82,7 @@
   .map + .card-sub{margin-top:22px;}
   .card-sub{font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:800;color:var(--ink-soft);margin:18px 0 4px;}
 
-  @media (max-width:420px){.hero-name{font-size:2.4rem;}.tab{font-size:0.82rem;}}
+  @media (max-width:420px){.hero-name{font-size:2.4rem;}}
 </style>
 </head>
 <body>
@@ -95,26 +96,52 @@
   </header>
 
   <div class="tabs-wrap">
-    <div class="tabs" id="tabs"></div>
+    <div class="tabs">
+      <button class="tab active" data-tab="unidades">Unidades</button>
+      <button class="tab" data-tab="pedido">Faça seu pedido</button>
+      <button class="tab" data-tab="whatsapp">WhatsApp</button>
+      <button class="tab" data-tab="site">Site do Gordino's</button>
+    </div>
   </div>
 
   <main class="content" id="panes">
-    <section class="pane" id="pedidos">
+    <section class="pane active" id="unidades"></section>
+
+    <section class="pane" id="pedido">
       <div class="card">
-        <div class="eyebrow">WhatsApp</div>
-        <h2 class="card-title">Peça pelo WhatsApp.</h2>
+        <div class="eyebrow">Pedidos</div>
+        <h2 class="card-title">Faça seu pedido.</h2>
         <p class="lead">Retirada no balcão ou entrega na região.</p>
         <ul class="list">
+          <li>Escolha a unidade mais perto de você</li>
           <li>Mande o pedido e o endereço</li>
           <li>Confirmamos o valor e o tempo de preparo</li>
           <li>Pagamento: Pix, cartão ou dinheiro</li>
         </ul>
-        <a class="btn wa" id="waBtn" target="_blank" rel="noopener">Pedir no WhatsApp &rarr;</a>
+        <a class="btn" id="pedidoBtn" target="_blank" rel="noopener">Fazer meu pedido &rarr;</a>
       </div>
       <div class="card" id="ifoodCard" hidden>
         <div class="eyebrow">Delivery</div>
         <h2 class="card-title">Também no iFood.</h2>
         <a class="btn" id="ifoodBtn" target="_blank" rel="noopener">Pedir pelo iFood &rarr;</a>
+      </div>
+    </section>
+
+    <section class="pane" id="whatsapp">
+      <div class="card">
+        <div class="eyebrow">WhatsApp</div>
+        <h2 class="card-title">Fale com a gente.</h2>
+        <p class="lead">Dúvidas, encomendas e pedidos direto pelo WhatsApp.</p>
+        <a class="btn wa" id="waBtn" target="_blank" rel="noopener">Abrir WhatsApp &rarr;</a>
+      </div>
+    </section>
+
+    <section class="pane" id="site">
+      <div class="card">
+        <div class="eyebrow">Gordino's</div>
+        <h2 class="card-title">Site do Gordino's.</h2>
+        <p class="lead">Conheça mais sobre a casa.</p>
+        <a class="btn" id="siteBtn" target="_blank" rel="noopener">Acessar o site &rarr;</a>
       </div>
     </section>
   </main>
@@ -128,15 +155,17 @@
 <script>
 /* ==========================================================
    DADOS DO GORDINO'S — edite só esta parte.
-   whatsapp e instagram ainda são EXEMPLOS.
+   whatsapp, instagram, pedido e site ainda são EXEMPLOS / vazios.
    ========================================================== */
 var SITE = {
   tagline: "Restaurante e marmitaria · Americana/SP",
   whatsapp: "5511999999999",           // só números, com 55 + DDD
   instagram: "gordinos",               // sem @
+  pedido: "",                          // link de pedido online (deixe "" para usar o WhatsApp)
   ifood: "",                           // link do iFood (deixe "" se não tiver)
+  site: "",                            // link do site do Gordino's
 
-  // Cada unidade vira uma aba. Horários: [abre, fecha] em horas; null = fechado.
+  // Unidades (aparecem na aba Unidades). Horários: [abre, fecha] em horas; null = fechado.
   // Dias: 0 = Domingo, 1 = Segunda ... 6 = Sábado.
   unidades: [
     {
@@ -185,11 +214,10 @@ function status(hor){
 $("tagline").textContent = SITE.tagline;
 $("year").textContent = now.getFullYear();
 
-var tabsHtml = "", statusHtml = "", panesHtml = "";
+var statusHtml = "", unitsHtml = "";
 SITE.unidades.forEach(function(u, i){
   var st = status(u.horarios), dot = '<span class="dot' + (st.open ? '' : ' closed') + '"></span>';
   var q = encodeURIComponent(u.endereco + ", " + u.bairro.replace(/·/g, ","));
-  tabsHtml += '<button class="tab' + (i === 0 ? ' active' : '') + '" data-tab="' + u.id + '">' + esc(u.aba) + '</button>';
   statusHtml += '<div class="status">' + dot + '<span>' + esc(u.aba) + ': ' + esc(st.text) + '</span></div>';
 
   var rows = "";
@@ -199,7 +227,7 @@ SITE.unidades.forEach(function(u, i){
       '</span><span class="h">' + (h ? hh(h[0]) + ' às ' + hh(h[1]) : 'Fechado') + '</span></div>';
   }
 
-  panesHtml += '<section class="pane' + (i === 0 ? ' active' : '') + '" id="' + u.id + '"><div class="card">' +
+  unitsHtml += '<div class="card" id="' + u.id + '">' +
     '<div class="eyebrow">' + esc(u.aba) + '</div>' +
     '<h2 class="card-title">' + esc(u.titulo) + '</h2>' +
     '<div class="unit-status">' + dot + esc(st.text) + '</div>' +
@@ -207,15 +235,16 @@ SITE.unidades.forEach(function(u, i){
     '<a class="btn" target="_blank" rel="noopener" href="https://maps.google.com/?q=' + q + '">Abrir no Maps</a>' +
     '<div class="map"><iframe loading="lazy" title="Mapa ' + esc(u.aba) + '" src="https://www.google.com/maps?q=' + q + '&output=embed"></iframe></div>' +
     '<div class="card-sub">Horários</div><p class="lead">' + esc(u.resumo) + '</p>' + rows +
-    '</div></section>';
+    '</div>';
 });
-tabsHtml += '<button class="tab" data-tab="pedidos">Pedidos</button>';
-$("tabs").innerHTML = tabsHtml;
 $("statuses").innerHTML = statusHtml;
-$("panes").insertAdjacentHTML("afterbegin", panesHtml);
+$("unidades").innerHTML = unitsHtml;
 
-// WhatsApp, iFood, Instagram
-$("waBtn").href = "https://wa.me/" + SITE.whatsapp + "?text=" + encodeURIComponent("Olá! Quero fazer um pedido.");
+// Pedido, WhatsApp, iFood, site, Instagram
+var wa = "https://wa.me/" + SITE.whatsapp;
+$("waBtn").href = wa;
+$("pedidoBtn").href = SITE.pedido || wa + "?text=" + encodeURIComponent("Olá! Quero fazer um pedido.");
+if (SITE.site){ $("siteBtn").href = SITE.site; } else { $("site").querySelector(".lead").textContent = "Em breve."; $("siteBtn").hidden = true; }
 if (SITE.ifood){ $("ifoodCard").hidden = false; $("ifoodBtn").href = SITE.ifood; }
 $("igBtn").href = "https://instagram.com/" + SITE.instagram;
 $("igBtn").textContent = "@" + SITE.instagram;
