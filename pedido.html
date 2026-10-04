@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fazer pedido · Gordino's</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bateu a fome? Então é só escolher! 🍴">
+<meta property="og:description" content="Escolha a unidade do Gordino's mais próxima e faça seu pedido.">
+<meta property="og:image" content="https://richardpessuti.github.io/Site-Gordino-s/og-image.png">
+<meta name="theme-color" content="#2B1A12">
+<link rel="icon" href="logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .back{display:inline-flex;align-items:center;gap:6px;margin:18px 0 0 18px;color:rgba(255,255,255,0.75);text-decoration:none;font-weight:700;font-size:0.92rem;}
+  .order-hero{padding:18px 24px 8px;text-align:center;}
+  .order-hero .hero-logo{width:110px;}
+  .order-title{font-weight:800;font-size:2rem;line-height:1.1;letter-spacing:-0.02em;color:#fff;margin-top:6px;}
+  .order-title span{color:var(--accent);}
+  .order-text{margin:14px auto 0;max-width:30ch;font-size:1.02rem;color:rgba(255,255,255,0.8);}
+  .units{padding:22px 16px 8px;display:grid;gap:12px;}
+  .unit-btn{display:flex;align-items:center;gap:14px;padding:18px;border-radius:22px;background:var(--cream);color:var(--ink);text-decoration:none;
+    box-shadow:0 10px 26px rgba(0,0,0,0.25);transition:transform .15s;}
+  .unit-btn:active{transform:scale(0.98);}
+  .unit-btn i{display:block;font-style:normal;font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;font-weight:800;color:var(--accent-2);}
+  .unit-btn b{display:block;font-size:1.35rem;font-weight:800;letter-spacing:-0.01em;}
+  .unit-btn small{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:0.84rem;color:var(--ink-soft);}
+  .unit-btn .arrow{margin-left:auto;flex:none;width:48px;height:48px;border-radius:50%;background:var(--accent);display:grid;place-items:center;}
+  .unit-btn .arrow svg{width:22px;height:22px;}
+  .note{text-align:center;font-size:0.84rem;color:rgba(255,255,255,0.55);margin-top:14px;padding:0 24px;}
+  .page{display:flex;flex-direction:column;}
+  .footer{margin-top:auto;padding-bottom:40px;}
+</style>
+</head>
+<body>
+<div class="page">
+  <a class="back" href="previa.html">&larr; Voltar</a>
+
+  <header class="order-hero">
+    <div class="hero-logo"><img src="logo.webp" alt="Gordino's" width="463" height="480"></div>
+    <h1 class="order-title">Bateu a fome?<br><span>Então é só escolher!</span> 🍴</h1>
+    <p class="order-text">Escolha abaixo a unidade mais próxima de você, e visualize nosso cardápio completo para fazer seu pedido! 😋👇</p>
+  </header>
+
+  <main class="units" id="units"></main>
+  <p class="note">Você será levado ao cardápio da unidade escolhida.</p>
+
+  <footer class="footer">
+    <p class="copy">© <span id="year"></span> Gordino's</p>
+  </footer>
+</div>
+
+<script src="dados.js"></script>
+<script>
+var ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="#2B1A12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+var html = "";
+SITE.unidades.forEach(function(u){
+  var st = status(u.horarios);
+  html += '<a class="unit-btn" href="' + u.pedido + '"><span><i>' + esc(u.aba) + '</i><b>' + esc(u.titulo) + '</b>' +
+    '<small><span class="dot' + (st.open ? '' : ' closed') + '"></span>' + esc(st.text) + '</small></span>' +
+    '<span class="arrow">' + ARROW + '</span></a>';
+});
+$("units").innerHTML = html;
+$("year").textContent = now.getFullYear();
+</script>
+</body>
+</html>

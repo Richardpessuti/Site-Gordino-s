@@ -6,7 +6,7 @@
 <title>Gordino's</title>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Gordino's · Restaurante e Marmitaria">
-<meta property="og:description" content="Americana/SP · Unidades, horários e pedidos pelo WhatsApp.">
+<meta property="og:description" content="Americana/SP · Unidades, horários e pedidos online.">
 <meta property="og:image" content="https://richardpessuti.github.io/Site-Gordino-s/og-image.png">
 <meta property="og:url" content="https://richardpessuti.github.io/Site-Gordino-s/">
 <meta name="theme-color" content="#2B1A12">
@@ -15,114 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg-1:#2B1A12;
-    --bg-2:#1E120C;
-    --accent:#F2B11F;
-    --accent-2:#E3242B;
-    --cream:#FFF6E6;
-    --cream-2:#FBEBCF;
-    --ink:#2B1A12;
-    --ink-soft:#6E5446;
-    --line:rgba(43,26,18,0.15);
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{font-family:'Bricolage Grotesque',system-ui,sans-serif;background:var(--bg-2);color:var(--cream);-webkit-font-smoothing:antialiased;line-height:1.5;}
-  .page{max-width:560px;margin:0 auto;min-height:100vh;background:linear-gradient(180deg,var(--bg-1) 0%,var(--bg-2) 70%);}
-
-  /* HERO */
-  .hero{padding:52px 24px 22px;text-align:center;}
-  .hero-logo{width:150px;margin:0 auto 16px;filter:drop-shadow(0 14px 30px rgba(0,0,0,0.45));}
-  .hero-logo img{width:100%;height:auto;display:block;}
-  .hero-name{font-weight:800;font-size:2.8rem;letter-spacing:-0.03em;line-height:1;color:#fff;}
-  .hero-name span{color:var(--accent);}
-  .hero-tag{margin-top:10px;font-size:0.98rem;color:rgba(255,255,255,0.7);font-weight:500;}
-  .status{display:inline-flex;align-items:center;gap:9px;margin-top:20px;padding:9px 18px;border-radius:100px;
-    background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);font-size:0.86rem;font-weight:700;color:#fff;}
-  .dot{width:9px;height:9px;border-radius:50%;background:#5FD07A;box-shadow:0 0 0 3px rgba(95,208,122,0.25);}
-  .dot.closed{background:#E9927C;box-shadow:0 0 0 3px rgba(233,146,124,0.25);}
-
-
-  .content{padding:16px 16px 8px;}
-  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-
-  /* CARDS */
-  .card{background:var(--cream);color:var(--ink);border-radius:24px;padding:24px 22px;margin-bottom:14px;scroll-margin-top:80px;}
-  .card-title{font-weight:800;font-size:1.6rem;letter-spacing:-0.02em;margin:6px 0 4px;}
-  .eyebrow{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:800;color:var(--accent-2);}
-  .lead{font-family:'Fraunces',serif;font-style:italic;color:var(--ink-soft);margin-bottom:14px;}
-  .hrow{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);}
-  .hrow:last-child{border-bottom:none;}
-  .hrow.today{font-weight:800;color:var(--accent-2);}
-  .hrow .h{color:var(--ink-soft);font-variant-numeric:tabular-nums;}
-  .hrow.today .h{color:inherit;}
-  .addr{font-size:1.05rem;}
-  .btn{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:var(--accent-2);color:#fff;text-decoration:none;
-    padding:14px 22px;border-radius:100px;font-weight:700;font-size:0.95rem;}
-  .btn.wa{background:#1FA855;}
-  .map{margin-top:16px;border-radius:18px;overflow:hidden;border:1px solid var(--line);height:210px;}
-  .map iframe{width:100%;height:100%;border:0;display:block;}
-  .list{list-style:none;margin-top:6px;}
-  .list li{padding:5px 0 5px 18px;position:relative;}
-  .list li::before{content:"";position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--accent-2);}
-
-  .footer{text-align:center;padding:28px 24px 44px;}
-  .ig{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);
-    border-radius:100px;color:#fff;text-decoration:none;font-weight:700;font-size:0.92rem;}
-  .copy{margin-top:20px;font-size:0.72rem;color:rgba(255,255,255,0.45);letter-spacing:0.1em;text-transform:uppercase;}
-
-  .statuses{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:20px;}
-  .statuses .status{margin-top:0;}
-  .unit-status{display:inline-flex;align-items:center;gap:8px;margin:2px 0 12px;font-weight:700;font-size:0.9rem;color:var(--ink);}
-  .map + .card-sub{margin-top:22px;}
-  .card-sub{font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:800;color:var(--ink-soft);margin:18px 0 4px;}
-
-  /* PRÉVIA: ações rápidas, status compacto, WhatsApp fixo, mapa sob demanda */
-  .quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px;}
-  .qbtn{display:flex;align-items:center;justify-content:center;gap:8px;padding:15px 10px;border-radius:16px;font-weight:800;font-size:0.98rem;
-    text-decoration:none;color:#fff;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);cursor:pointer;font-family:inherit;}
-  .qbtn.wa{background:#1FA855;border-color:#1FA855;}
-  .qbtn.main{grid-column:1 / -1;background:var(--accent);border-color:var(--accent);color:var(--bg-1);font-size:1.15rem;padding:18px 10px;}
-  .qbtn.main svg{width:24px;height:24px;}
-  .qbtn.go{grid-column:1 / -1;}
-  .qbtn.sm{line-height:1.2;grid-column:1 / -1;padding:12px 8px;font-size:0.92rem;font-weight:700;background:transparent;color:rgba(255,255,255,0.85);}
-  .qbtn.sm svg{width:18px;height:18px;}
-  .qbtn.sm + .qbtn.sm{margin-top:-2px;}
-  .qbtn svg{width:20px;height:20px;flex:none;}
-  .statusline{display:grid;justify-content:center;gap:8px;margin-top:18px;font-size:0.8rem;font-weight:700;color:rgba(255,255,255,0.85);}
-  .statusline > span{display:flex;align-items:center;gap:7px;white-space:nowrap;padding:8px 14px;border-radius:100px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);}
-  .statusline em{font-style:normal;font-weight:500;color:rgba(255,255,255,0.7);margin-left:auto;padding-left:10px;}
-  @media (max-width:389px){.statusline{font-size:0.72rem;}.statusline > span{padding:7px 12px;}}
-  @media (max-width:340px){.statusline > span{white-space:normal;flex-wrap:wrap;justify-content:center;}}
-  .fab{position:fixed;right:16px;bottom:16px;z-index:60;height:56px;padding:0 22px;border-radius:100px;background:var(--accent);color:var(--bg-1);display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:1rem;
-    box-shadow:0 10px 24px rgba(0,0,0,0.4);}
-  .fab svg{width:22px;height:22px;}
-  .fab{transition:opacity .2s,transform .2s;}
-  .fab.hide{opacity:0;transform:translateY(20px);pointer-events:none;}
-  .mapbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:56px;margin-top:12px;border-radius:16px;border:1.5px dashed var(--line);
-    background:transparent;color:var(--ink-soft);font-family:inherit;font-weight:700;font-size:0.95rem;cursor:pointer;}
-  .btnrow{display:flex;flex-wrap:wrap;gap:10px;}
-  .btn.ghost{background:transparent;color:var(--accent-2);border:1.5px solid var(--accent-2);}
-  .footer{padding-bottom:100px;}
-  .sheet-bg{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,0.55);display:none;align-items:flex-end;justify-content:center;}
-  .sheet-bg.open{display:flex;animation:fade .2s ease;}
-  .sheet{width:100%;max-width:560px;background:var(--cream);color:var(--ink);border-radius:26px 26px 0 0;padding:22px 18px 28px;}
-  .sheet h3{font-weight:800;font-size:1.3rem;margin:0 4px 4px;}
-  .sheet p{color:var(--ink-soft);font-size:0.92rem;margin:0 4px 14px;}
-  .opt{display:flex;align-items:center;gap:12px;padding:16px;border-radius:18px;background:#fff;border:1px solid var(--line);
-    text-decoration:none;color:var(--ink);margin-bottom:10px;}
-  .opt b{display:block;font-size:1.05rem;}
-  .opt small{display:flex;align-items:center;gap:6px;color:var(--ink-soft);font-size:0.84rem;}
-  .opt .go{margin-left:auto;width:40px;height:40px;border-radius:50%;background:#1FA855;display:grid;place-items:center;flex:none;}
-  .opt .go svg{width:22px;height:22px;color:#fff;}
-  .opt .go.pin{background:var(--accent-2);}
-  #unidades .card{scroll-margin-top:16px;}
-  .sheet .cancel{width:100%;margin-top:4px;padding:14px;border:none;border-radius:100px;background:transparent;color:var(--ink-soft);font-family:inherit;font-weight:700;font-size:0.95rem;cursor:pointer;}
-
-  @media (max-width:420px){.hero-name{font-size:2.4rem;}}
-</style>
+<link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 <div class="page">
@@ -133,7 +26,7 @@
     <p class="hero-tag" id="tagline"></p>
     <div class="statusline" id="statuses"></div>
     <div class="quick">
-      <a class="qbtn main" id="qPedido" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Fazer pedido</a>
+      <a class="qbtn main" id="qPedido"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Fazer pedido</a>
       <button class="qbtn go" id="qGo" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Como chegar</button>
       <button class="qbtn sm" id="qFale" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg>Fale conosco</button>
       <a class="qbtn sm" id="qSite" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>Site do Gordino's</a>
@@ -144,7 +37,7 @@
     <section id="unidades"></section>
   </main>
 
-  <a class="fab" id="fab" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Fazer pedido</a>
+  <a class="fab" id="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Fazer pedido</a>
 
   <div class="sheet-bg" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
     <div class="sheet">
@@ -161,71 +54,8 @@
   </footer>
 </div>
 
+<script src="dados.js"></script>
 <script>
-/* ==========================================================
-   DADOS DO GORDINO'S — edite só esta parte.
-   whatsapp e instagram ainda são EXEMPLOS.
-   ========================================================== */
-var SITE = {
-  tagline: "Restaurante e marmitaria · Americana/SP",
-  whatsapp: "5511999999999",           // só números, com 55 + DDD
-  instagram: "gordinos",               // sem @
-  pedido: "https://loja.neemo.com.br/grupogordinos",  // site de pedidos
-  site: "https://loja.neemo.com.br/grupogordinos",    // site do Gordino's (trocar se for outro endereço)
-
-  // Unidades (aparecem ao tocar em "Como chegar"). Horários: [abre, fecha] em horas; null = fechado.
-  // Dias: 0 = Domingo, 1 = Segunda ... 6 = Sábado.
-  unidades: [
-    {
-      id: "santa-cruz",
-      aba: "Unidade 1",
-      titulo: "Santa Cruz",
-      whatsapp: "",                    // WhatsApp desta unidade ("" = usa o número geral)
-      endereco: "Rua São Vito, 1812",
-      bairro: "Santa Cruz · Americana/SP",
-      resumo: "Todos os dias, das 8h às 14h.",
-      horarios: { 0:[8,14], 1:[8,14], 2:[8,14], 3:[8,14], 4:[8,14], 5:[8,14], 6:[8,14] }
-    },
-    {
-      id: "zanaga",
-      aba: "Unidade 2",
-      titulo: "Zanaga",
-      whatsapp: "",                    // WhatsApp desta unidade ("" = usa o número geral)
-      endereco: "Av. Antônio Conselheiro, 332",
-      bairro: "Antônio Zanaga II · Americana/SP",
-      resumo: "De segunda a sábado, das 8h às 14h.",
-      horarios: { 0:null, 1:[8,14], 2:[8,14], 3:[8,14], 4:[8,14], 5:[8,14], 6:[8,14] }
-    }
-  ]
-};
-
-/* ============ não precisa mexer daqui pra baixo ============ */
-var DIAS = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
-function $(id){ return document.getElementById(id); }
-function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
-function hh(n){ return (n % 24) + "h"; }
-
-var now = new Date(), today = now.getDay();
-
-// Link do WhatsApp de uma unidade, já com a mensagem dizendo qual é a loja
-function waUrl(u){
-  return "https://wa.me/" + (u.whatsapp || SITE.whatsapp) + "?text=" + encodeURIComponent("Olá! Vim pelo site e quero falar com a " + u.aba + " (" + u.titulo + ").");
-}
-
-// Status aberto/fechado de uma unidade (considera horário que passa da meia-noite)
-function status(hor){
-  var t = now.getHours() + now.getMinutes() / 60;
-  var h = hor[today], y = hor[(today + 6) % 7];
-  if ((h && t >= h[0] && t < h[1]) || (y && y[1] > 24 && t < y[1] - 24))
-    return { open: true, text: "Aberta agora · até " + hh(h && t >= h[0] ? h[1] : y[1]) };
-  for (var i = 0; i < 7; i++){
-    var d = (today + i) % 7, x = hor[d];
-    if (x && (i > 0 || t < x[0]))
-      return { open: false, text: "Fechada · abre " + (i === 0 ? "hoje" : i === 1 ? "amanhã" : DIAS[d].toLowerCase()) + " às " + hh(x[0]) };
-  }
-  return { open: false, text: "Fechada" };
-}
-
 $("tagline").textContent = SITE.tagline;
 $("year").textContent = now.getFullYear();
 
@@ -249,7 +79,7 @@ SITE.unidades.forEach(function(u, i){
     '<h2 class="card-title">' + esc(u.titulo) + '</h2>' +
     '<div class="unit-status">' + dot + esc(st.text) + '</div>' +
     '<p class="addr"><b>' + esc(u.endereco) + '</b><br>' + esc(u.bairro) + '</p>' +
-    '<div class="btnrow"><a class="btn" target="_blank" rel="noopener" href="' + SITE.pedido + '">Fazer pedido</a>' +
+    '<div class="btnrow"><a class="btn" target="_blank" rel="noopener" href="' + u.pedido + '">Fazer pedido</a>' +
     '<a class="btn ghost" target="_blank" rel="noopener" href="https://maps.google.com/?q=' + q + '">Como chegar</a>' +
     '</div>' +
     '<button class="mapbtn" type="button" data-q="' + q + '" data-t="' + esc(u.titulo) + '">Ver no mapa</button>' +
