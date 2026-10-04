@@ -7,7 +7,7 @@ var SITE = {
   whatsapp: "5519981650101",           // número geral (só números, com 55 + DDD)
   instagram: "gordinos",               // sem @
   pedido: "pedido.html",               // página "Fazer pedido" (escolha da unidade)
-  site: "https://loja.neemo.com.br/grupogordinos",    // site do Gordino's (trocar se for outro endereço)
+  site: "https://www.gordinos.com.br/",              // site do Gordino's
 
   // Unidades (aparecem ao tocar em "Como chegar"). Horários: [abre, fecha] em horas; null = fechado.
   // Dias: 0 = Domingo, 1 = Segunda ... 6 = Sábado.
