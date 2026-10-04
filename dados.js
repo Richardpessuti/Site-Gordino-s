@@ -1,10 +1,10 @@
 /* ==========================================================
    DADOS DO GORDINO'S — edite só esta parte.
-   whatsapp e instagram ainda são EXEMPLOS.
+   instagram ainda é EXEMPLO.
    ========================================================== */
 var SITE = {
   tagline: "Restaurante e marmitaria · Americana/SP",
-  whatsapp: "5511999999999",           // só números, com 55 + DDD
+  whatsapp: "5519981650101",           // número geral (só números, com 55 + DDD)
   instagram: "gordinos",               // sem @
   pedido: "pedido.html",               // página "Fazer pedido" (escolha da unidade)
   site: "https://loja.neemo.com.br/grupogordinos",    // site do Gordino's (trocar se for outro endereço)
@@ -17,7 +17,8 @@ var SITE = {
       aba: "Unidade 1",
       titulo: "Santa Cruz",
       pedido: "https://loja.neemo.com.br/gordinos-restaurante",
-      whatsapp: "",                    // WhatsApp desta unidade ("" = usa o número geral)
+      whatsapp: "5519981650101",
+      mensagem: "Olá gostaria de fazer um pedido!!!",
       endereco: "Rua São Vito, 1812",
       bairro: "Santa Cruz · Americana/SP",
       resumo: "Todos os dias, das 8h às 14h.",
@@ -28,7 +29,8 @@ var SITE = {
       aba: "Unidade 2",
       titulo: "Zanaga",
       pedido: "https://loja.neemo.com.br/gordinos-marmitaria",
-      whatsapp: "",                    // WhatsApp desta unidade ("" = usa o número geral)
+      whatsapp: "5519991953819",
+      mensagem: "Olá gostaria de fazer um pedido",
       endereco: "Av. Antônio Conselheiro, 332",
       bairro: "Antônio Zanaga II · Americana/SP",
       resumo: "De segunda a sábado, das 8h às 14h.",
@@ -45,9 +47,9 @@ function hh(n){ return (n % 24) + "h"; }
 
 var now = new Date(), today = now.getDay();
 
-// Link do WhatsApp de uma unidade, já com a mensagem dizendo qual é a loja
+// Link do WhatsApp de uma unidade, com a mensagem pronta
 function waUrl(u){
-  return "https://wa.me/" + (u.whatsapp || SITE.whatsapp) + "?text=" + encodeURIComponent("Olá! Vim pelo site e quero falar com a " + u.aba + " (" + u.titulo + ").");
+  return "https://wa.me/" + (u.whatsapp || SITE.whatsapp) + "?text=" + encodeURIComponent(u.mensagem || "Olá! Vim pelo site.");
 }
 
 // Status aberto/fechado de uma unidade (considera horário que passa da meia-noite)
