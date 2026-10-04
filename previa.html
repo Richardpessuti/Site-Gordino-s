@@ -99,11 +99,10 @@
   .qbtn.go{grid-column:1 / -1;}
   .qbtn svg{width:20px;height:20px;flex:none;}
   .statusline{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:16px;font-size:0.86rem;font-weight:700;color:rgba(255,255,255,0.85);}
-  .statusline{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;}
-  .si{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:10px 8px;text-align:center;}
-  .si i{display:block;font-style:normal;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:800;color:var(--accent);margin-bottom:2px;}
-  .si b{display:flex;align-items:center;justify-content:center;gap:7px;font-size:1rem;}
-  .si small{display:block;margin-top:3px;font-size:0.8rem;font-weight:500;color:rgba(255,255,255,0.7);}
+  .statusline span{display:flex;align-items:center;gap:7px;white-space:nowrap;}
+  .statusline em{font-style:normal;font-weight:500;color:rgba(255,255,255,0.7);}
+  @media (max-width:389px){.statusline{font-size:0.76rem;}}
+  @media (max-width:340px){.statusline span{white-space:normal;flex-wrap:wrap;justify-content:center;}}
   .fab{position:fixed;right:16px;bottom:16px;z-index:60;height:56px;padding:0 22px;border-radius:100px;background:var(--accent);color:var(--bg-1);display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:1rem;
     box-shadow:0 10px 24px rgba(0,0,0,0.4);}
   .fab svg{width:22px;height:22px;}
@@ -278,7 +277,8 @@ var statusHtml = "", unitsHtml = "";
 SITE.unidades.forEach(function(u, i){
   var st = status(u.horarios), dot = '<span class="dot' + (st.open ? '' : ' closed') + '"></span>';
   var q = encodeURIComponent(u.endereco + ", " + u.bairro.replace(/·/g, ","));
-  statusHtml += '<div class="si"><i>' + esc(u.aba) + '</i><b>' + dot + esc(u.titulo) + '</b><small>' + esc(st.text) + '</small></div>';
+  var curto = st.open ? st.text.replace("Aberta agora · até", "aberta até") : st.text.replace("Fechada · ", "");
+  statusHtml += '<span>' + dot + esc(u.aba + " · " + u.titulo) + ' · <em>' + esc(curto) + '</em></span>';
 
   var rows = "";
   for (var d = 0; d < 7; d++){
