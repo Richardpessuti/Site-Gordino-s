@@ -1,11 +1,10 @@
 /* ==========================================================
    DADOS DO GORDINO'S — edite só esta parte.
-   instagram ainda é EXEMPLO.
    ========================================================== */
 var SITE = {
   tagline: "Restaurante e Marmitaria · Americana/SP",
   whatsapp: "5519981650101",           // número geral (só números, com 55 + DDD)
-  instagram: "gordinos",               // sem @
+  instagram: ["gordinosoficial", "gordinos_marmitaria"],  // sem @
   pedido: "pedido.html",               // página "Fazer pedido" (escolha da unidade)
   site: "https://www.gordinos.com.br/",              // site do Gordino's
 
