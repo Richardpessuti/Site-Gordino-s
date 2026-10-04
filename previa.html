@@ -98,8 +98,12 @@
   .qbtn.main svg{width:24px;height:24px;}
   .qbtn.go{grid-column:1 / -1;}
   .qbtn svg{width:20px;height:20px;flex:none;}
-  .statusline{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-top:16px;font-size:0.86rem;font-weight:700;color:rgba(255,255,255,0.85);}
-  .statusline span{display:inline-flex;align-items:center;gap:7px;}
+  .statusline{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:16px;font-size:0.86rem;font-weight:700;color:rgba(255,255,255,0.85);}
+  .statusline{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;}
+  .si{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:10px 8px;text-align:center;}
+  .si i{display:block;font-style:normal;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:800;color:var(--accent);margin-bottom:2px;}
+  .si b{display:flex;align-items:center;justify-content:center;gap:7px;font-size:1rem;}
+  .si small{display:block;margin-top:3px;font-size:0.8rem;font-weight:500;color:rgba(255,255,255,0.7);}
   .fab{position:fixed;right:16px;bottom:16px;z-index:60;height:56px;padding:0 22px;border-radius:100px;background:var(--accent);color:var(--bg-1);display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:1rem;
     box-shadow:0 10px 24px rgba(0,0,0,0.4);}
   .fab svg{width:22px;height:22px;}
@@ -218,9 +222,9 @@ var SITE = {
   // Dias: 0 = Domingo, 1 = Segunda ... 6 = Sábado.
   unidades: [
     {
-      id: "restaurante",
-      aba: "Restaurante",
-      titulo: "Restaurante",
+      id: "santa-cruz",
+      aba: "Unidade 1",
+      titulo: "Santa Cruz",
       whatsapp: "",                    // WhatsApp desta unidade ("" = usa o número geral)
       endereco: "Rua São Vito, 1812",
       bairro: "Santa Cruz · Americana/SP",
@@ -228,9 +232,9 @@ var SITE = {
       horarios: { 0:[8,14], 1:[8,14], 2:[8,14], 3:[8,14], 4:[8,14], 5:[8,14], 6:[8,14] }
     },
     {
-      id: "marmitaria",
-      aba: "Marmitaria",
-      titulo: "Marmitaria · Loja 2",
+      id: "zanaga",
+      aba: "Unidade 2",
+      titulo: "Zanaga",
       whatsapp: "",                    // WhatsApp desta unidade ("" = usa o número geral)
       endereco: "Av. Antônio Conselheiro, 332",
       bairro: "Antônio Zanaga II · Americana/SP",
@@ -250,7 +254,7 @@ var now = new Date(), today = now.getDay();
 
 // Link do WhatsApp de uma unidade, já com a mensagem dizendo qual é a loja
 function waUrl(u){
-  return "https://wa.me/" + (u.whatsapp || SITE.whatsapp) + "?text=" + encodeURIComponent("Olá! Vim pelo site e quero falar com a unidade " + u.aba + ".");
+  return "https://wa.me/" + (u.whatsapp || SITE.whatsapp) + "?text=" + encodeURIComponent("Olá! Vim pelo site e quero falar com a " + u.aba + " (" + u.titulo + ").");
 }
 
 // Status aberto/fechado de uma unidade (considera horário que passa da meia-noite)
@@ -258,13 +262,13 @@ function status(hor){
   var t = now.getHours() + now.getMinutes() / 60;
   var h = hor[today], y = hor[(today + 6) % 7];
   if ((h && t >= h[0] && t < h[1]) || (y && y[1] > 24 && t < y[1] - 24))
-    return { open: true, text: "Aberto agora · até " + hh(h && t >= h[0] ? h[1] : y[1]) };
+    return { open: true, text: "Aberta agora · até " + hh(h && t >= h[0] ? h[1] : y[1]) };
   for (var i = 0; i < 7; i++){
     var d = (today + i) % 7, x = hor[d];
     if (x && (i > 0 || t < x[0]))
-      return { open: false, text: "Fechado · abre " + (i === 0 ? "hoje" : i === 1 ? "amanhã" : DIAS[d].toLowerCase()) + " às " + hh(x[0]) };
+      return { open: false, text: "Fechada · abre " + (i === 0 ? "hoje" : i === 1 ? "amanhã" : DIAS[d].toLowerCase()) + " às " + hh(x[0]) };
   }
-  return { open: false, text: "Fechado" };
+  return { open: false, text: "Fechada" };
 }
 
 $("tagline").textContent = SITE.tagline;
@@ -274,7 +278,7 @@ var statusHtml = "", unitsHtml = "";
 SITE.unidades.forEach(function(u, i){
   var st = status(u.horarios), dot = '<span class="dot' + (st.open ? '' : ' closed') + '"></span>';
   var q = encodeURIComponent(u.endereco + ", " + u.bairro.replace(/·/g, ","));
-  statusHtml += '<span>' + dot + esc(u.aba) + (st.open ? ' aberto' : ' fechado').replace(/o$/, /a$/.test(u.aba) ? 'a' : 'o') + '</span>';
+  statusHtml += '<div class="si"><i>' + esc(u.aba) + '</i><b>' + dot + esc(u.titulo) + '</b><small>' + esc(st.text) + '</small></div>';
 
   var rows = "";
   for (var d = 0; d < 7; d++){
@@ -292,7 +296,7 @@ SITE.unidades.forEach(function(u, i){
     '<div class="btnrow"><a class="btn" target="_blank" rel="noopener" href="' + SITE.pedido + '">Fazer pedido</a>' +
     '<a class="btn ghost" target="_blank" rel="noopener" href="https://maps.google.com/?q=' + q + '">Como chegar</a>' +
     '</div>' +
-    '<button class="mapbtn" type="button" data-q="' + q + '" data-t="' + esc(u.aba) + '">Ver no mapa</button>' +
+    '<button class="mapbtn" type="button" data-q="' + q + '" data-t="' + esc(u.titulo) + '">Ver no mapa</button>' +
     '<div class="card-sub">Horários</div><p class="lead">' + esc(u.resumo) + '</p>' + rows +
     '</div>';
 });
@@ -303,7 +307,7 @@ $("unidades").innerHTML = unitsHtml;
 // Botões gerais de WhatsApp abrem a escolha da unidade
 var WAICON = $("waSide").innerHTML, opts = "";
 SITE.unidades.forEach(function(u){
-  opts += '<a class="opt" target="_blank" rel="noopener" href="' + waUrl(u) + '"><span><b>' + esc(u.titulo) + '</b><small>' +
+  opts += '<a class="opt" target="_blank" rel="noopener" href="' + waUrl(u) + '"><span><b>' + esc(u.aba + " · " + u.titulo) + '</b><small>' +
     '<span class="dot' + (u.st.open ? '' : ' closed') + '"></span>' + esc(u.st.text) + '</small></span><span class="go">' + WAICON + '</span></a>';
 });
 $("sheetOpts").innerHTML = opts;
